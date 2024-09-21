@@ -17,6 +17,6 @@ useTabs: false
 tailwindFunctions: ['clsx', 'cx']
 
 # Plugin Sorting Options
-importOrder: ['^~/(.*)$', '^[../]', '^[./]']
+importOrder: ['^@/(.*)$', '^[../]', '^[./]']
 importOrderSeparation: true
 importOrderSortSpecifiers: true
