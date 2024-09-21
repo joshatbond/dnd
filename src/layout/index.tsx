@@ -1,6 +1,9 @@
+import { AnimatePresence, motion } from 'framer-motion'
+import { PanelRightOpenIcon } from 'lucide-react'
 import { ReactNode, useEffect, useRef } from 'react'
 import { ImperativePanelHandle, getPanelElement } from 'react-resizable-panels'
 
+import { Button } from '@/components/ui/button'
 import {
   ResizableHandle,
   ResizablePanel,
@@ -36,6 +39,9 @@ function MainPanel(props: { children: ReactNode }) {
   const isOpen = useSidebarStore(state => state.isOpen)
   const isResizing = useSidebarStore(state => state.isResizing)
   const setContentWidth = useSidebarStore(state => state.setContentWidth)
+  const toggleSidebarVisibility = useSidebarStore(
+    state => state.toggleSidebarVisibility
+  )
 
   useEffect(() => {
     ref.current = getPanelElement('graph')
@@ -54,9 +60,29 @@ function MainPanel(props: { children: ReactNode }) {
       id="graph"
       className={cn({
         'transition-all duration-300 ease-in-out': isOpen && !isResizing,
+        relative: true,
       })}
     >
       {props.children}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute right-4 top-4"
+          >
+            <Button
+              className="h-auto p-1"
+              variant="ghost"
+              onClick={() => toggleSidebarVisibility(true)}
+            >
+              <PanelRightOpenIcon />
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </ResizablePanel>
   )
 }
