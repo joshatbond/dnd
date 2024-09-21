@@ -42,7 +42,6 @@ const useSidebarStore = createStore(
     toggleSidebarVisibility: (isOpen?: boolean) => {
       set(
         state => {
-          console.log('toggleSidebarVisibility', isOpen)
           state.isOpen = isOpen ?? !state.isOpen
           state.content.defaultSize = state.isOpen
             ? 100 - state.sidebar.defaultSize

@@ -43,7 +43,6 @@ function MainPanel(props: { children: ReactNode }) {
 
   useEffect(() => {
     if (!ref.current || isResizing) return
-    console.log('mainPanel:', isResizing, isOpen, ref.current.clientWidth)
 
     setContentWidth(isOpen ? ref.current.clientWidth : window.innerWidth)
   }, [isResizing, isOpen])
@@ -69,7 +68,6 @@ function SidebarPanel(props: { children: ReactNode }) {
   const isResizing = useSidebarStore(state => state.isResizing)
 
   useEffect(() => {
-    console.log('isOpen was modified to', isOpen)
     if (ref.current) {
       ref.current[isOpen ? 'expand' : 'collapse']()
     }
