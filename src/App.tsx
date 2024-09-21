@@ -1,10 +1,10 @@
-import { X } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { ForceGraph3D } from 'react-force-graph'
+import { Plus, X } from 'lucide-react'
 
-import store from '@/store'
+import store from '@/graph/store'
+import useNodeStore from '@/graph/store'
 
 import { Button } from './components/ui/button'
+import Graph from './graph'
 import { PanelContainer } from './layout'
 import useLayoutStore from './layout/store'
 
@@ -16,27 +16,6 @@ export default function App() {
   )
 }
 
-function Graph() {
-  const [widthState, widthStateAssign] = useState(0)
-  const nodes = store(state => state.nodes)
-  const links = store(state => state.links)
-  const toggleSidebarVisibility = useLayoutStore(
-    state => state.toggleSidebarVisibility
-  )
-  const width = useLayoutStore(state => state.content.width)
-
-  useEffect(() => {
-    widthStateAssign(width)
-  }, [width])
-
-  useEffect(() => {
-    if (nodes.length === 0) {
-      toggleSidebarVisibility(true)
-    }
-  }, [nodes])
-
-  return <ForceGraph3D graphData={{ nodes, links }} width={widthState} />
-}
 function Sidebar() {
   const nodes = store(state => state.nodes)
   const toggleSidebarVisibility = useLayoutStore(
@@ -54,7 +33,18 @@ function Sidebar() {
           <X />
         </Button>
       </div>
-      {nodes.length === 0 ? 'No nodes' : 'Nodes'}
+      {nodes.length === 0 ? <EmptyNodes /> : 'Nodes'}
+    </div>
+  )
+}
+function EmptyNodes() {
+  const createNode = useNodeStore(state => state.createNode)
+  return (
+    <div>
+      <p> No nodes exist! Create one to get started...</p>
+      <Button onClick={createNode} variant="ghost" className="h-auto px-0 py-0">
+        <Plus />
+      </Button>
     </div>
   )
 }
