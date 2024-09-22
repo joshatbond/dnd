@@ -6,22 +6,24 @@ import { devtools, persist } from 'zustand/middleware'
 const createId = init({ length: 10 })
 
 const useNodeStore = create<{
-  nodes: { id: string }[]
-  links: Record<string, number>[]
-  isSidebarOpen: boolean
   /** The currently selected node */
   activeNode?: string | null
+  isDebugMode: boolean
+  links: Record<string, number>[]
+  nodes: TNode[]
+
+  createNode: () => void
   getRandomTree: (n?: number, reverse?: boolean) => void
   selectNode: (id: string) => void
-  createNode: () => void
+  toggleDebugMode: (b?: boolean) => void
 }>()(
   devtools(
     persist(
       set => ({
+        activeNode: null,
+        isDebugMode: false,
         nodes: [],
         links: [],
-        activeNode: null,
-        isSidebarOpen: false,
         createNode: () =>
           set(
             state => ({
@@ -55,6 +57,15 @@ const useNodeStore = create<{
             }),
             false,
             'selectNode'
+          ),
+        toggleDebugMode: b =>
+          set(
+            state => ({
+              ...state,
+              isDebugMode: b ?? !state.isDebugMode,
+            }),
+            false,
+            'toggleDebugMode'
           ),
       }),
       { name: 'nodeStore' }
