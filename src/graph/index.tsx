@@ -27,6 +27,7 @@ export default function Graph() {
       graphData={{ nodes: nodes as any, links }}
       width={width}
       height={windowHeight}
+      nodeLabel="label"
       onNodeClick={n => {
         selectNode(n.id as string)
       }}

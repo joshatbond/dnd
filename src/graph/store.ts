@@ -1,5 +1,4 @@
 import { init } from '@paralleldrive/cuid2'
-import { Object3D } from 'node_modules/@types/three'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
@@ -13,6 +12,11 @@ const useNodeStore = create<{
   nodes: TNode[]
 
   createNode: () => void
+  editNodeProperty: <K extends keyof TNode>(
+    id: string,
+    key: K,
+    value: TNode[K]
+  ) => void
   getRandomTree: (n?: number, reverse?: boolean) => void
   selectNode: (id: string) => void
   toggleDebugMode: (b?: boolean) => void
@@ -32,6 +36,17 @@ const useNodeStore = create<{
             }),
             false,
             'createNode'
+          ),
+        editNodeProperty: (id, key, value) =>
+          set(
+            state => ({
+              ...state,
+              nodes: state.nodes.map(n =>
+                n.id !== id ? n : { ...n, [key]: value }
+              ),
+            }),
+            false,
+            'editNodeProperty'
           ),
         getRandomTree: (n = 300, reverse = false) =>
           set(
@@ -87,12 +102,12 @@ function newNode(): TNode {
     vz: 0,
     index: null,
     nodeVal: 1,
-    nodeLabel: '',
+    label: '',
   }
 }
 export type TNode = {
   id: string
-  __threeObj?: Object3D | null
+  __threeObj?: unknown | null
   index: number | null
   x: number
   y: number
@@ -101,5 +116,5 @@ export type TNode = {
   vy: number
   vz: number
   nodeVal: number
-  nodeLabel: string
+  label: string
 }
