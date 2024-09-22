@@ -1,50 +1,25 @@
-# React + TypeScript + Vite
+# Dungeons and Dragons Node Graph
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A graph visualization of the Dungeons and Dragons 5e node system.
 
-Currently, two official plugins are available:
+## Inspiration
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+I was trying to come up with a better way to send character data across the
+internet. The way that dndbeyond does it is very inefficient as a big json blob,
+with a lot of redundant data. As I was pulling it apart, I realized that what I
+was building was a graph. Writing a graph by hand is hot garbage, so I am building
+this tool to help me construct that graph. I'm initially focusing on what's in the
+character sheet - but this should be easily extendable to other data sources.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- Nodes can be dragged around
+- Nodes can be resized
+- Nodes can be deleted
+- Nodes can be created
+- Nodes can be edited
+- Nodes can be colored
+- Nodes can be labeled
+- Nodes can be sized
+- Nodes can be connected
+- Nodes can be disconnected
