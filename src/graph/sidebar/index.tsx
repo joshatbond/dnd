@@ -149,7 +149,7 @@ function NodeAttribute({
 
   return (
     <div className="flex items-end gap-2">
-      <label htmlFor={_id} className="min-w-24">
+      <label htmlFor={attr.key} className="min-w-24">
         {attr.label}:
       </label>
       <Input
@@ -171,7 +171,7 @@ function Input(props: {
   const type = typeof props.value === 'number' ? 'number' : 'string'
   return (
     <input
-      id={props._id}
+      id={props.nodeKey}
       className="border-b border-b-muted-foreground bg-transparent px-4 py-1 hover:rounded-t hover:border-b-secondary hover:bg-gray-900 focus-visible:rounded-t focus-visible:border-b-secondary focus-visible:bg-gray-900 active:rounded-t active:border-b-secondary active:bg-gray-900"
       type={type === 'number' ? 'number' : 'text'}
       value={props.value}
