@@ -50,10 +50,8 @@ const useNodeStore = create<{
         selectNode: id =>
           set(
             state => ({
-              links: state.links,
-              nodes: state.nodes.map(node =>
-                node.id === id ? { ...node, nodeRelSize: 8 } : node
-              ),
+              ...state,
+              activeNode: id,
             }),
             false,
             'store/selectNode'
