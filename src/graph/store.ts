@@ -103,6 +103,7 @@ function newNode(): TNode {
     index: null,
     nodeVal: 1,
     label: '',
+    color: 'red',
   }
 }
 export type TNode = {
@@ -117,4 +118,5 @@ export type TNode = {
   vz: number
   nodeVal: number
   label: string
+  color: string
 }

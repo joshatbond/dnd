@@ -28,6 +28,7 @@ export default function Graph() {
       width={width}
       height={windowHeight}
       nodeLabel="label"
+      nodeColor="color"
       onNodeClick={n => {
         selectNode(n.id as string)
       }}

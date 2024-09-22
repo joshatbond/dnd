@@ -71,14 +71,19 @@ function Node() {
   const activeNodeId = useNodeStore(state => state.activeNode)
   const currentNode = useMemo(() => {
     const refineAttributes = (n: TNode) => {
-      const nonDebugKeys = ['nodeVal', 'label']
+      const nonDebugKeys = ['nodeVal', 'label', 'color']
       return Object.entries(n)
         .map(([key, value]) => {
           if (nonDebugKeys.includes(key)) {
             return {
               key,
               value,
-              label: key === 'label' ? 'Node Label' : 'Node Size',
+              label:
+                key === 'label'
+                  ? 'Node Label'
+                  : key === 'color'
+                    ? 'Node Color'
+                    : 'Node Size',
             }
           }
           if (isDebugMode) {
