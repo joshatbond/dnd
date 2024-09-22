@@ -1,4 +1,5 @@
 import { init } from '@paralleldrive/cuid2'
+import { type Mesh } from 'three'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
@@ -108,7 +109,7 @@ function newNode(): TNode {
 }
 export type TNode = {
   id: string
-  __threeObj?: unknown | null
+  __threeObj?: Mesh | null
   index: number | null
   x: number
   y: number
