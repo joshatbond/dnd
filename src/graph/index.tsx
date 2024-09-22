@@ -12,6 +12,7 @@ export default function Graph() {
   const toggleSidebarVisibility = useLayoutStore(
     state => state.toggleSidebarVisibility
   )
+  const selectNode = useNodeStore(state => state.selectNode)
   const width = useLayoutStore(state => state.content.width)
 
   useEffect(() => {
@@ -24,5 +25,13 @@ export default function Graph() {
     }
   }, [nodes])
 
-  return <ForceGraph3D graphData={{ nodes, links }} width={widthState} />
+  return (
+    <ForceGraph3D
+      graphData={{ nodes: nodes as any, links }}
+      width={widthState}
+      onNodeClick={n => {
+        selectNode(n.id as string)
+      }}
+    />
+  )
 }
