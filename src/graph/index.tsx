@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ForceGraph3D } from 'react-force-graph'
 
 import useLayoutStore from '@/layout/store'
+import { useWindowSize } from '@/lib/useWindowSize'
 
 import useNodeStore from './store'
 
 export default function Graph() {
-  const [widthState, widthStateAssign] = useState(0)
+  const { height: windowHeight } = useWindowSize()
   const nodes = useNodeStore(state => state.nodes)
   const links = useNodeStore(state => state.links)
   const toggleSidebarVisibility = useLayoutStore(
@@ -14,10 +15,6 @@ export default function Graph() {
   )
   const selectNode = useNodeStore(state => state.selectNode)
   const width = useLayoutStore(state => state.content.width)
-
-  useEffect(() => {
-    widthStateAssign(width)
-  }, [width])
 
   useEffect(() => {
     if (nodes.length === 0) {
@@ -28,7 +25,8 @@ export default function Graph() {
   return (
     <ForceGraph3D
       graphData={{ nodes: nodes as any, links }}
-      width={widthState}
+      width={width}
+      height={windowHeight}
       onNodeClick={n => {
         selectNode(n.id as string)
       }}

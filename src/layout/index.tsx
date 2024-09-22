@@ -10,6 +10,7 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { cn } from '@/lib/cn'
+import { useWindowSize } from '@/lib/useWindowSize'
 
 import useSidebarStore from './store'
 
@@ -42,6 +43,7 @@ function MainPanel(props: { children: ReactNode }) {
   const toggleSidebarVisibility = useSidebarStore(
     state => state.toggleSidebarVisibility
   )
+  const { width: windowWidth } = useWindowSize()
 
   useEffect(() => {
     ref.current = getPanelElement('graph')
@@ -51,7 +53,7 @@ function MainPanel(props: { children: ReactNode }) {
     if (!ref.current || isResizing) return
 
     setContentWidth(isOpen ? ref.current.clientWidth : window.innerWidth)
-  }, [isResizing, isOpen])
+  }, [isResizing, isOpen, windowWidth])
 
   return (
     <ResizablePanel
