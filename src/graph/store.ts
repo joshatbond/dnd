@@ -29,7 +29,7 @@ const useNodeStore = create<{
               nodes: [...state.nodes, newNode()],
             }),
             false,
-            'store/createNode'
+            'createNode'
           ),
         getRandomTree: (n = 300, reverse = false) =>
           set(
@@ -45,7 +45,7 @@ const useNodeStore = create<{
                 })),
             }),
             false,
-            'store/getRandomTree'
+            'getRandomTree'
           ),
         selectNode: id =>
           set(
@@ -54,12 +54,12 @@ const useNodeStore = create<{
               activeNode: id,
             }),
             false,
-            'store/selectNode'
+            'selectNode'
           ),
       }),
       { name: 'nodeStore' }
     ),
-    { name: 'nodes', store: `store:nodes`, serialize: { options: true } }
+    { name: 'nodes', store: `nodeStore`, serialize: { options: true } }
   )
 )
 export default useNodeStore
