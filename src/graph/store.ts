@@ -1,6 +1,6 @@
 import { init } from '@paralleldrive/cuid2'
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 const createId = init({ length: 10 })
 
@@ -15,48 +15,51 @@ const useNodeStore = create<{
   createNode: () => void
 }>()(
   devtools(
-    set => ({
-      nodes: [],
-      links: [],
-      activeNode: null,
-      isSidebarOpen: false,
-      createNode: () =>
-        set(
-          state => ({
-            links: state.links,
-            nodes: [...state.nodes, { id: createId() }],
-          }),
-          false,
-          'store/createNode'
-        ),
-      getRandomTree: (n = 300, reverse = false) =>
-        set(
-          _ => ({
-            nodes: [...Array(n).keys()].map(() => ({ id: createId() })),
-            links: [...Array(n).keys()]
-              .filter(id => id)
-              .map(id => ({
-                [reverse ? 'target' : 'source']: id,
-                [reverse ? 'source' : 'target']: Math.round(
-                  Math.random() * (id - 1)
-                ),
-              })),
-          }),
-          false,
-          'store/getRandomTree'
-        ),
-      selectNode: id =>
-        set(
-          state => ({
-            links: state.links,
-            nodes: state.nodes.map(node =>
-              node.id === id ? { ...node, nodeRelSize: 8 } : node
-            ),
-          }),
-          false,
-          'store/selectNode'
-        ),
-    }),
+    persist(
+      set => ({
+        nodes: [],
+        links: [],
+        activeNode: null,
+        isSidebarOpen: false,
+        createNode: () =>
+          set(
+            state => ({
+              links: state.links,
+              nodes: [...state.nodes, { id: createId() }],
+            }),
+            false,
+            'store/createNode'
+          ),
+        getRandomTree: (n = 300, reverse = false) =>
+          set(
+            _ => ({
+              nodes: [...Array(n).keys()].map(() => ({ id: createId() })),
+              links: [...Array(n).keys()]
+                .filter(id => id)
+                .map(id => ({
+                  [reverse ? 'target' : 'source']: id,
+                  [reverse ? 'source' : 'target']: Math.round(
+                    Math.random() * (id - 1)
+                  ),
+                })),
+            }),
+            false,
+            'store/getRandomTree'
+          ),
+        selectNode: id =>
+          set(
+            state => ({
+              links: state.links,
+              nodes: state.nodes.map(node =>
+                node.id === id ? { ...node, nodeRelSize: 8 } : node
+              ),
+            }),
+            false,
+            'store/selectNode'
+          ),
+      }),
+      { name: 'nodeStore' }
+    ),
     { name: 'nodes', store: `store:nodes`, serialize: { options: true } }
   )
 )
